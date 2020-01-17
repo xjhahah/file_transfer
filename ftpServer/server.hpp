@@ -12,7 +12,6 @@
 #include <cstdlib>
 #include <unordered_map>
 
-
 using namespace std;
 
 //建立套接字
@@ -26,9 +25,8 @@ class Sock{
     // 2.创建套接字
     void Socket(){
       _sock = socket(AF_INET,SOCK_STREAM,0);
-      if(_sock < 0)
-      {
-	      ceer << " socker error" << endl;
+      if(_sock < 0) {
+          ceer << " socker error" << endl;
 	      exit(2);
       }      
     }
