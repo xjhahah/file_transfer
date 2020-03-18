@@ -9,11 +9,22 @@ using namespace std;
 
 class Mysql{
   public:
-    Mysql();
-    ~Mysql();
+    Mysql(){
+      _mysql = mysql_init(nullptr);
+      if(nullptr != _mysql){
+        cerr << "sql init error: " << mysql_error(_mysql);
+        exit(-1);
+      }
+    }
 
-    bool InitSql(string host, string user, string pwd, string sqlName);
-    bool ExeSql(string sql);
+    ~Mysql(){
+      if(!_mysql){
+        mysql_close(_mysql);
+      }
+    }
+
+    bool InitSql(string& host,const string& user,const string& pwd,const string& sqlName);
+    bool ExeSql(const string& sql);
 
     void AddFile(const string& fileName,long long size);
     void CheckFile();
