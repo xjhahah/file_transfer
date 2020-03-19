@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <mysql/mysql.h>
+#include <dirent.h>  //linux下操作目录函数
+#include <sys/stat.h>
 
 
 using namespace std;
