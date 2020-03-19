@@ -1,11 +1,16 @@
-#include "MySql.h"
+#include "Mysql.h"
+#include <cstring>
+
+
 
 bool Mysql::InitSql(string& host, const string& user, const string& pwd, const string& sqlName){
   //连接数据库
   //连接成功返回MYSQL*连接句柄，即sql服务器
-  if(!mysql_real_connect(_mysql, host.c_str(), user.c_str(), pwd.c_str(), sqlName.c_str(), 0 , nullptr , 0)){
+  if(!mysql_real_connect(_mysql, host.c_str(), user.c_str(), pwd.c_str(), sqlName.c_str(), 0, nullptr, 0)){
     cout << "sql connect fail!,error message: " << mysql_error(_mysql);
     exit(-1);
+  }else{
+    cout << "sql connected success..." << endl;
   } 
   return true;
 }
@@ -36,4 +41,48 @@ bool Mysql::ExeSql(const string& sql){
     mysql_free_result(_result);
   } 
   return true;
+}
+
+void  Mysql::CheckFile(){
+  cout << "star check filepath is ok or no ok" << endl;
+
+  const char *path = "/home/xjh/file_transfer";
+
+
+  //Linux下遍历目录： 打开目录---》读取内容 ---》 关闭目录
+  DIR *dp;
+
+  struct dirent *entry; //定义文件操作句柄
+
+  if((dp = opendir(path)) == NULL){
+    cerr << "cannot open server file..." << endl;
+    return ;
+  }else{
+    cout << "open it success" << endl;
+  }
+
+
+  while((entry = readdir(dp)) != NULL){
+    cout << entry->d_name << endl;
+
+    if(strcmp(".",entry->d_name) == 0 || strcmp("..",entry->d_name) == 0){
+      continue;
+    }
+
+    char path_file[100] = "/home/xjh/file_transfer";
+    char name[100] = "";
+
+    sprintf(name, "%s", entry->d_name);
+    strcat(path_file, name);
+    cout << path_file << endl;
+
+    struct stat stbuf;
+
+    int res = stat(path_file, &stbuf);
+
+    printf("%8ld  %s\n", stbuf.st_size, name);
+    
+    AddFile(stbuf.st_size, name);
+  }
+  closedir(dp);
 }
