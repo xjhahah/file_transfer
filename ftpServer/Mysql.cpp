@@ -1,6 +1,7 @@
 #include "Mysql.h"
-#include <cstring>
-
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 
 bool Mysql::InitSql(string& host, const string& user, const string& pwd, const string& sqlName){
@@ -85,4 +86,15 @@ void  Mysql::CheckFile(){
     AddFile(stbuf.st_size, name);
   }
   closedir(dp);
+}
+
+
+void Mysql::AddFile(long long size, char* name){
+  char cmd[1024] = "";
+  sprintf(cmd, "INSERT INTO ftpData values('%s','%d');", name, size);
+  puts(cmd);
+  if(mysql_real_query(_mysql, cmd, strlen(cmd)));{
+    cerr << "0 query fail, message: " << mysql_error(_mysql);
+    return ;
+  }
 }
