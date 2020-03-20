@@ -1,12 +1,12 @@
 #include "server.h"
-#include "MySql.h"
+#include "Mysql.h"
 
 
 int main()
 {
   Mysql sql;
   
-  sql.InitSql("47.92.211.160", "root", "123456", "file");
+  sql.InitSql("localhost", "root", "xjh1998,.", "file");
   sql.CheckFile();
   sql.ExeSql("SELECT * FROM Infor;");
 
