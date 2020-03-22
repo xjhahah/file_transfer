@@ -39,7 +39,7 @@ bool Mysql::ExeSql(const string& sql){
       }
       cout << endl;
     }
-    mysql_free_result(_result);
+    //mysql_free_result(_result);
   } 
   return true;
 }

@@ -32,7 +32,7 @@ class Server{
     //4.发送文件
     void Sebd_file(string s,int size);
     //5.消息处理函数
-    void Message_handle(int sockfd);
+    void handle_message(int sockfd);
     //6.列表展示
     void List_file(string s,int size);
   private:
